@@ -11,14 +11,23 @@ python + scapy
 掌握网络扫描之端口状态探测的基本原理
 
 ## 实验要求
-[x] 禁止探测互联网上的 IP ，严格遵守网络安全相关法律法规
-[x] 完成以下扫描技术的编程实现：
-    [x] TCP connect scan / TCP stealth scan
-    - TCP Xmas scan / TCP fin scan / TCP null scan
-    - UDP scan
-[x] 上述每种扫描技术的实现测试均需要测试端口状态为：`开放`、`关闭`和`被过滤`状态时的程序执行结果
-- 提供每一次扫描测试的抓包结果并分析与课本中的扫描方法原理是否相符？如果不同，试分析原因；
-[x] 在实验报告中详细说明实验网络环境拓扑、被测试` IP `的端口状态是如何模拟的
+
+[-] 禁止探测互联网上的 IP ，严格遵守网络安全相关法律法规
+
+[-] 完成以下扫描技术的编程实现：
+
+    [-] TCP connect scan / TCP stealth scan
+
+    [-] TCP Xmas scan / TCP fin scan / TCP null scan
+
+    [-] UDP scan
+
+[-] 上述每种扫描技术的实现测试均需要测试端口状态为：`开放`、`关闭`和`被过滤`状态时的程序执行结果
+
+[-] 提供每一次扫描测试的抓包结果并分析与课本中的扫描方法原理是否相符？如果不同，试分析原因；
+
+[-] 在实验报告中详细说明实验网络环境拓扑、被测试` IP `的端口状态是如何模拟的
+
 - （可选）复刻 nmap 的上述扫描技术实现的命令行参数开关
 
 ## 实验思路
@@ -135,6 +144,12 @@ elif(tcp_connect_scan_resp.haslayer(ICMP)):
 ![](./img/tcp_conn_close.png)
 #### filtered
 ![](./img/tcp_conn_filtered.png)
+使用 nmap 实现同样功能
+
+`nmap -sT -p 80 192.168.56.113`
+
+实验结果与课本预期相符
+
 ### TCP SYN scan
 
 ```python
@@ -171,6 +186,12 @@ elif(stealth_scan_resp.haslayer(ICMP)):
 #### filtered
 ![](./img/tcp_stealth_filtered.png)
 
+使用 nmap 实现同样功能
+
+`nmap -sS -p 80 -n -vv 192.168.56.113`
+
+实验结果与课本预期相符
+
 ### TCP Xmas scan
 
 ```python
@@ -203,6 +224,12 @@ elif(xmas_scan_resp.haslayer(ICMP)):
 ![](./img/tcp_xmas_filteredoropen.png)
 #### filtered
 ![](./img/tcp_xmas_filtered.png)
+
+使用 nmap 实现同样功能
+
+`nmap -sX -p 80 -n -vv 192.168.56.113`
+
+实验结果与课本预期相符
 
 ### TCP Fin scan
 
@@ -239,6 +266,12 @@ elif(fin_scan_resp.haslayer(ICMP)):
 ![](./img/tcp_fin_foro.png)
 > 开启与被过滤状态得到的相应都是一样的
 
+使用 nmap 实现同样功能
+
+`nmap -sF -p 80 -n -vv 192.168.56.113`
+
+实验结果与课本预期相符
+
 ### TCP Null scan
 ```python
 import logging
@@ -273,6 +306,12 @@ elif(null_scan_resp.haslayer(ICMP)):
 ![](./img/tcp_null_filtered.png)
 
 > Null scan 可以明确检测到被过滤状态，但是不可以确定开启状态
+
+使用 nmap 实现同样功能
+
+`nmap -sN -p 80 -n -vv 192.168.56.113`
+
+实验结果与课本预期相符
 
 ### UDP scan
 
@@ -317,6 +356,12 @@ udp_scan(dst_ip,dst_port,dst_timeout)
 ![](./img/udp_close.png)
 #### filtered
 ![](./img/udp_foro.png)
+
+使用 nmap 实现同样功能
+
+`nmap -sU -p 53 -n -vv 192.168.56.113`
+
+实验结果与课本预期相符
 
 ## 遇到的问题
 
